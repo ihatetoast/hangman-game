@@ -1,0 +1,16 @@
+//VARIABLES//
+$test-color: rgb(187, 253, 67);
+$test-opacity: rgba(187, 253, 67, 0.5);
+
+//MIXINS
+@mixin box($w, $h){
+	width: $w;
+	height: $h;
+}
+
+//TESTS
+.test {
+	background-color: $test-color;
+	@include box(50%, 10em);
+
+}
