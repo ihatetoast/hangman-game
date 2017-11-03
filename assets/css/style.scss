@@ -1,6 +1,28 @@
 //VARIABLES//
-$test-color: rgb(187, 253, 67);
-$test-opacity: rgba(187, 253, 67, 0.5);
+
+
+/* Coolors Exported Palette - coolors.co/ec0b43-58355e-7ae7c7-d6ffb7-fff689 */
+
+/* RGB */
+$red: rgba(236, 11, 67, 1);
+$purple: rgba(88, 53, 94, 1);
+$ltteal: rgba(122, 231, 199, 1);
+$ltgreen: rgba(214, 255, 183, 1);
+$yellow: rgba(255, 246, 137, 1);
+
+
+/* Coolors Exported Palette - coolors.co/373a40-919e5c-d57533-d1a65c-d4b181 */
+/* RGB */
+$dkgrey: rgba(55, 58, 64, 1);
+$olive: rgba(145, 158, 92, 1);
+$pumpkin: rgba(213, 117, 51, 1);
+$ltorange: rgba(209, 166, 92, 1);
+$tan: rgba(212, 177, 129, 1);
+
+$black: rgba(19, 19, 19, 1);
+$white: rgba(234, 230, 229, 1);
+
+
 
 //MIXINS
 @mixin box($w, $h){
@@ -9,8 +31,52 @@ $test-opacity: rgba(187, 253, 67, 0.5);
 }
 
 //TESTS
+$test-color: rgb(187, 253, 67);
+$test-opacity: rgba(187, 253, 67, 0.5);
 .test {
 	background-color: $test-color;
-	@include box(50%, 10em);
+}
+@mixin testBox($w, $h, $color1, $color2, $o){
+	border: 3px dotted $color1;
+	background-color: $color2;
+	width: $w;
+	height: $h;
+	opacity: $o
+}
+* {
+	box-sizing: border-box;
+}
+body {
+	display: flex;
+	flex-direction: column;
+}
+//******************************************
+//******************************************
+// HEADER
+//******************************************
+//******************************************
+header {
+	@include testBox(100%, 5em, yellow, green, 0.5 );
+}
 
+//******************************************
+//******************************************
+// MAIN CONTENT
+//******************************************
+//******************************************
+section {
+	display: flex;
+	@include testBox(100%, 30em, green, blue, 0.5 );
+}
+//******************************************
+//******************************************
+// FOOTER
+//******************************************
+//******************************************
+
+footer {
+	
+	h5 {
+		color: white;
+	}
 }
