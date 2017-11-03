@@ -1,10 +1,14 @@
 document.addEventListener("DOMContentLoaded", function(e) { 
   console.log("if you see me, you dun did load gud.");
 // need a list of words DONE
-  const wordBank = ['PANTALOONS', 'KNICKERS', 'BOTTOMS', 'SLACKS', 'JEANS', 'CULOTTES', 'OVERALLS', 'SHORTS', 'LEGGINGS', 'JEGGINGS', 'CARGO', 'FLAIR', 'BELL BOTTOMS', 'BRITCHES', 'TROUSERS', 'BURMUDAS', 'BLOOMERS', 'UNDERPANTS', 'CHAPS', 'CORDS', 'CORDUROYS', 'DENIMS', 'DRAWERS', 'DUNGAREES', 'JODHPURS', 'BOXERS', 'CLAM DIGGERS', 'PEDAL PUSHERS', 'CAPRI', 'SMARTY', 'SASSY', 'BIG GIRL', 'BIG BOY'];
+  const wordBank = ['PANTALOONS', 'KNICKERS', 'BOTTOMS', 'SLACKS', 'JEANS', 'CULOTTES', 'OVERALLS', 'SHORTS', 'LEGGINGS', 'JEGGINGS', 'CARGO', 'FLAIR', 'BELL-BOTTOMS', 'BRITCHES', 'TROUSERS', 'BURMUDAS', 'BLOOMERS', 'UNDERPANTS', 'CHAPS', 'CORDS', 'CORDUROYS', 'DENIMS', 'DRAWERS', 'DUNGAREES', 'JODHPURS', 'BOXERS', 'CLAM-DIGGERS', 'PEDAL-PUSHERS', 'CAPRI', 'SMARTY', 'SASSY', 'BIG-GIRL', 'BIG-BOY'];
 
 // need to have an alphabet array DONE
 	const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+	//variables for DOM elem
+	const word = document.getElementById('word');
+	const alpha = document.getElementById('alphabet');
 
   function play(){
   	let misses = [];//will need to know how many bad guesses = a loss. 
@@ -13,18 +17,29 @@ document.addEventListener("DOMContentLoaded", function(e) {
   	//get a random number to be an index
 
   	const randoWord = wordBank[ Math.floor(Math.random() * wordBank.length) ];
+
+  	//the actual word and the matching array of dashes. these need to match:
   	let randoWordArr = randoWord.split('');
-  	let randoWordDashes = [];
+  	let dashesHTML = [];
 
   	console.log(` Random word array is ${randoWordArr}`);
+
+  	//convert the random word into dashes and put them into the dom
   	for(let l = 0; l < randoWordArr.length; l++){
   		console.log(`${l+1} letter is ${randoWordArr[l]}`);
-  		randoWordDashes.push(`<span id=${l}> - </span>`);
+  		dashesHTML.push(`<span id="${l}"> - </span>`);
   	}
-  	console.log(randoWordDashes);
-  	let dashes = document.getElementById('word');
-  	dashes.innerHTML = randoWordDashes;
+  	console.log(dashesHTML);
+  	word.innerHTML = dashesHTML;
 
+
+  	//make buttons for each letter of the alphabet
+  	let alphaHTML = [];
+  	for(let a = 0; a < alphabet.length; a++){
+  		alphaHTML.push(`<div class="alphaBtn" id="${alphabet[a].toLowerCase()}">${alphabet[a]}</div>`);
+  	}
+  	console.log(alphaHTML);
+  	alpha.innerHTML = alphaHTML;
   }
   
 //get the random word, for each letter, there's a dash or underline. display underlines

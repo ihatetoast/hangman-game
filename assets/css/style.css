@@ -27,6 +27,18 @@ section {
   height: 30em;
   opacity: 0.5; }
 
+.alphaBtn {
+  width: 2em;
+  height: 2em;
+  background-color: #fff689;
+  color: #131313;
+  display: inline-block;
+  text-align: center;
+  font-size: 1.5em;
+  line-height: 2em;
+  margin: 0.2em;
+  border-radius: 50%; }
+
 footer h5 {
   color: white; }
 
