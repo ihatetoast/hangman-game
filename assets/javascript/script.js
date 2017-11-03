@@ -1,37 +1,70 @@
+//load first. not nec here, but taking no chances with SVGs
 document.addEventListener("DOMContentLoaded", function(e) { 
   console.log("if you see me, you dun did load gud.");
-// need a list of words DONE
-  const wordBank = ['PANTALOONS', 'KNICKERS', 'BOTTOMS', 'SLACKS', 'JEANS', 'CULOTTES', 'OVERALLS', 'SHORTS', 'LEGGINGS', 'JEGGINGS', 'CARGO', 'FLAIR', 'BELL-BOTTOMS', 'BRITCHES', 'TROUSERS', 'BURMUDAS', 'BLOOMERS', 'UNDERPANTS', 'CHAPS', 'CORDS', 'CORDUROYS', 'DENIMS', 'DRAWERS', 'DUNGAREES', 'JODHPURS', 'BOXERS', 'CLAM-DIGGERS', 'PEDAL-PUSHERS', 'CAPRI', 'SMARTY', 'SASSY', 'BIG-GIRL', 'BIG-BOY'];
-
-// need to have an alphabet array DONE
-	const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+// need a list of words 
+  const wordBank = ['pantaloons', 'knickers', 'bottoms', 'slacks', 'jeans', 'culottes', 'overalls', 'shorts', 'leggings', 'jeggings', 'cargo', 'britches', 'trousers', 'burmudas', 'bloomers', 'underpants', 'chaps', 'longjohns', 'corduroys', 'denims', 'drawers', 'dungarees', 'jodhpurs', 'boxers', 'capri', 'smarty', 'sassy'];
+// need to have an alphabet array 
+	const alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
 	//variables for DOM elem
 	const word = document.getElementById('word');
 	const alpha = document.getElementById('alphabet');
 
   function play(){
-  	let misses = [];//will need to know how many bad guesses = a loss. 
+    console.log("play function called");
 
-  	console.log("play function called");
+    let userGuess;
+  	let misses = [];//will need to know how many bad guesses = a loss. 3
+    console.log(misses);
   	//get a random number to be an index
+    const randoWord = wordBank[ Math.floor(Math.random() * wordBank.length) ];
+    //the actual word and the matching array of dashes. these need to match:
+    let randoWordArr = randoWord.split('');
+    let dashesHTML = [];
+    console.log(` Random word array is ${randoWordArr}`);
+    //convert the random word into dashes and put them into the dom
+    for(let l = 0; l < randoWordArr.length; l++){
+      console.log(`${l+1} letter is ${randoWordArr[l]}`);
+      dashesHTML.push(`<span id="${l}"> _ </span>`);
+    }
+    console.log(dashesHTML);
+    word.innerHTML = dashesHTML;
 
-  	const randoWord = wordBank[ Math.floor(Math.random() * wordBank.length) ];
+    //dealing with getting the user's choice
+    document.onkeyup = function(e) {
+      // Determines which key was pressed.
+      userGuess = e.key;
+      console.log(`userGuess is ${userGuess}`);
 
-  	//the actual word and the matching array of dashes. these need to match:
-  	let randoWordArr = randoWord.split('');
-  	let dashesHTML = [];
+      //playing the game:
+      //check if user choice is valid
+        //if not valid, tell them to do it again
+        //if it is valid, check if it's in the word
+            //if it is not, push letter to bad guesses array
+            //show a body part
+            //when all body parts shown and exhibition hangman is deddernded, user loses.
+            //if it is, replace dash with letter
+      if(alphabet.indexOf(userGuess) < 0){
+        alert('That is not a letter. Please choose a letter.');
+      }
+      else{
+        if(randoWordArr.indexOf(userGuess) < 0){
+          misses.push(userGuess);
+        }
+        console.log(misses);
+      }
+      for(var i = 0; i < misses.length; i++){
+      var bodyPartSeen = document.getElementById(`body-${i+1}`);
+      bodyPartSeen.style.opacity = "1";
+    }
+    }
+    
 
-  	console.log(` Random word array is ${randoWordArr}`);
+  	
 
-  	//convert the random word into dashes and put them into the dom
-  	for(let l = 0; l < randoWordArr.length; l++){
-  		console.log(`${l+1} letter is ${randoWordArr[l]}`);
-  		dashesHTML.push(`<span id="${l}"> - </span>`);
-  	}
-  	console.log(dashesHTML);
-  	word.innerHTML = dashesHTML;
+  	
 
+	
 
   	//make buttons for each letter of the alphabet
   	let alphaHTML = [];

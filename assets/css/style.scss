@@ -1,6 +1,4 @@
 //VARIABLES//
-
-
 /* Coolors Exported Palette - coolors.co/ec0b43-58355e-7ae7c7-d6ffb7-fff689 */
 
 /* RGB */
@@ -9,7 +7,6 @@ $purple: rgba(88, 53, 94, 1);
 $ltteal: rgba(122, 231, 199, 1);
 $ltgreen: rgba(214, 255, 183, 1);
 $yellow: rgba(255, 246, 137, 1);
-
 
 /* Coolors Exported Palette - coolors.co/373a40-919e5c-d57533-d1a65c-d4b181 */
 /* RGB */
@@ -22,33 +19,48 @@ $tan: rgba(212, 177, 129, 1);
 $black: rgba(19, 19, 19, 1);
 $white: rgba(234, 230, 229, 1);
 
-
-
 //MIXINS
-@mixin box($w, $h){
+@mixin divBox($w, $h){
 	width: $w;
 	height: $h;
 }
+@mixin hang($t,$l){
+	position: absolute;
+	top: $t;
+	left: $l;
+}
 
+
+// font-family: 'Cabin Sketch', cursive;
+// font-family: 'Pompiere', cursive;
+// font-family: 'Ultra', serif;
 //TESTS
 $test-color: rgb(187, 253, 67);
 $test-opacity: rgba(187, 253, 67, 0.5);
-.test {
-	background-color: $test-color;
-}
-@mixin testBox($w, $h, $color1, $color2, $o){
-	border: 3px dotted $color1;
-	background-color: $color2;
-	width: $w;
-	height: $h;
-	opacity: $o
-}
+
+
+
 * {
 	box-sizing: border-box;
 }
+// html {
+//   height: 100%;
+// }
+html, body, .viewport {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+ }
+.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.wrapper{
+	flex:1;
+}
 body {
-	display: flex;
-	flex-direction: column;
+  background-color: $tan;
 }
 //******************************************
 //******************************************
@@ -56,7 +68,22 @@ body {
 //******************************************
 //******************************************
 header {
-	@include testBox(100%, 5em, yellow, green, 0.5 );
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1em 0.1em;;
+	background-color: $olive;
+	font-family: 'Ultra', serif;
+  font-size: 1.5em;
+  letter-spacing: 0.5em;
+  h1 {
+  	color: $dkgrey;
+  }
+  @media screen and (min-width:564px){
+  	font-size: 2.5em;
+  	padding: 0.45em;
+  }
+
 }
 
 //******************************************
@@ -66,19 +93,121 @@ header {
 //******************************************
 section {
 	display: flex;
-	@include testBox(100%, 30em, green, blue, 0.5 );
+	flex-direction: column;
+	flex:1;
+	padding: 1em;
+
+	background-color: $pumpkin;
 }
 
+.gallowsAlphabet {
+	display:flex;
+	flex-wrap: wrap-reverse;
+	justify-content: space-around;
+	align-items: center;
+}
+// GALLOWS AND HANGING MAN
+.gallowsScene {
+	position: relative;
+	width: 316px;
+  height: 410px;
+}
+.gallows, .window {
+	position:absolute;
+}
+.gallows {
+	top: 3%;
+	left: 1%;
+}
+.hangingBody{
+	top: 20.2%;
+	left: 32%;
+}
+
+#body-1{
+	@include hang(20.1%, 44%);
+	opacity: 0;
+}
+#body-7{
+	@include hang(20%, 45.4%);
+	opacity: 0;
+}
+#body-2 {
+	@include hang(30.8%, 46.6%);
+	opacity: 0;
+}
+#body-3{
+	@include hang(49.6%, 32%);
+	opacity: 0;
+}
+#body-4 {
+	@include hang(49.6%, 47%);
+	opacity: 0;
+}
+#body-5 {
+	@include hang(33%, 40%);
+	opacity: 0;
+}
+#body-6 {
+	@include hang(33.6%, 47%);
+	opacity: 0;
+}
+.window {
+	top: 0%;
+	left: 0%;
+	z-index: 2;
+}
+.alphabet {
+	border: 0.8em solid $tan;
+	background-color: black;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 0.5em;
+	text-transform: uppercase;
+	width: 100%;
+	padding-bottom: 0.5em;
+	@media screen and (min-width:564px){
+		width: 40%;
+		border: 1em solid $tan;
+	}
+}
+.alphaBtn, .word {
+	font-family: 'Cabin Sketch', sans-serif;
+	color: $white;
+	font-size: 1.5em;
+	line-height: 1.5em;
+	@media screen and (min-width:564px){
+		font-size: 1.5em;
+		line-height: 1.5em;
+	}
+}
 .alphaBtn {
-	@include box(2em, 2em);
-	background-color: $yellow;
-	color: $black;
+	@include divBox(1em, 1em);
 	display: inline-block;
 	text-align: center;
-	font-size: 1.5em;
-	line-height: 2em;
-	margin: 0.2em;
+	margin: 0.1em;
 	border-radius: 50%;
+	@media screen and (min-width:564px){
+		@include divBox(1.5em, 1.5em);
+		margin: 0.2em;
+	}
+}
+.wordToGuess{
+	display:flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content:center;
+	padding: 0.2em;
+	color: $white;
+	h1 {
+		font-family: 'Pompiere', sans-serif;
+		font-size: 1.5em;
+	}
+}
+.word {
+	margin-left: 1em;
 }
 //******************************************
 //******************************************
@@ -87,8 +216,14 @@ section {
 //******************************************
 
 footer {
-	
-	h5 {
-		color: white;
+	flex-shrink: 0;
+	background-color: $black;
+	text-align:center;
+	padding: 0.2em;
+	p {
+		color: $dkgrey;
+	}
+	@media screen and (min-width:564px){
+		padding: 0.5em;
 	}
 }

@@ -2,44 +2,179 @@
 /* RGB */
 /* Coolors Exported Palette - coolors.co/373a40-919e5c-d57533-d1a65c-d4b181 */
 /* RGB */
-.test {
-  background-color: #bbfd43; }
-
 * {
   box-sizing: border-box; }
 
-body {
+html, body, .viewport {
+  width: 100%;
+  height: 100%;
+  margin: 0; }
+
+.site {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  min-height: 100vh; }
+
+.wrapper {
+  flex: 1; }
+
+body {
+  background-color: #d4b181; }
 
 header {
-  border: 3px dotted yellow;
-  background-color: green;
-  width: 100%;
-  height: 5em;
-  opacity: 0.5; }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 0.1em;
+  background-color: #919e5c;
+  font-family: 'Ultra', serif;
+  font-size: 1.5em;
+  letter-spacing: 0.5em; }
+  header h1 {
+    color: #373a40; }
+  @media screen and (min-width: 564px) {
+    header {
+      font-size: 2.5em;
+      padding: 0.45em; } }
 
 section {
   display: flex;
-  border: 3px dotted green;
-  background-color: blue;
+  flex-direction: column;
+  flex: 1;
+  padding: 1em;
+  background-color: #d57533; }
+
+.gallowsAlphabet {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: space-around;
+  align-items: center; }
+
+.gallowsScene {
+  position: relative;
+  width: 316px;
+  height: 410px; }
+
+.gallows, .window {
+  position: absolute; }
+
+.gallows {
+  top: 3%;
+  left: 1%; }
+
+.hangingBody {
+  top: 20.2%;
+  left: 32%; }
+
+#body-1 {
+  position: absolute;
+  top: 20.1%;
+  left: 44%;
+  opacity: 0; }
+
+#body-7 {
+  position: absolute;
+  top: 20%;
+  left: 45.4%;
+  opacity: 0; }
+
+#body-2 {
+  position: absolute;
+  top: 30.8%;
+  left: 46.6%;
+  opacity: 0; }
+
+#body-3 {
+  position: absolute;
+  top: 49.6%;
+  left: 32%;
+  opacity: 0; }
+
+#body-4 {
+  position: absolute;
+  top: 49.6%;
+  left: 47%;
+  opacity: 0; }
+
+#body-5 {
+  position: absolute;
+  top: 33%;
+  left: 40%;
+  opacity: 0; }
+
+#body-6 {
+  position: absolute;
+  top: 33.6%;
+  left: 47%;
+  opacity: 0; }
+
+.window {
+  top: 0%;
+  left: 0%;
+  z-index: 2; }
+
+.alphabet {
+  border: 0.8em solid #d4b181;
+  background-color: black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
   width: 100%;
-  height: 30em;
-  opacity: 0.5; }
+  padding-bottom: 0.5em; }
+  @media screen and (min-width: 564px) {
+    .alphabet {
+      width: 40%;
+      border: 1em solid #d4b181; } }
+
+.alphaBtn, .word {
+  font-family: 'Cabin Sketch', sans-serif;
+  color: #eae6e5;
+  font-size: 1.5em;
+  line-height: 1.5em; }
+  @media screen and (min-width: 564px) {
+    .alphaBtn, .word {
+      font-size: 1.5em;
+      line-height: 1.5em; } }
 
 .alphaBtn {
-  width: 2em;
-  height: 2em;
-  background-color: #fff689;
-  color: #131313;
+  width: 1em;
+  height: 1em;
   display: inline-block;
   text-align: center;
-  font-size: 1.5em;
-  line-height: 2em;
-  margin: 0.2em;
+  margin: 0.1em;
   border-radius: 50%; }
+  @media screen and (min-width: 564px) {
+    .alphaBtn {
+      width: 1.5em;
+      height: 1.5em;
+      margin: 0.2em; } }
 
-footer h5 {
-  color: white; }
+.wordToGuess {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0.2em;
+  color: #eae6e5; }
+  .wordToGuess h1 {
+    font-family: 'Pompiere', sans-serif;
+    font-size: 1.5em; }
+
+.word {
+  margin-left: 1em; }
+
+footer {
+  flex-shrink: 0;
+  background-color: #131313;
+  text-align: center;
+  padding: 0.2em; }
+  footer p {
+    color: #373a40; }
+  @media screen and (min-width: 564px) {
+    footer {
+      padding: 0.5em; } }
 
 /*# sourceMappingURL=style.css.map */
