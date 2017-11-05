@@ -2,78 +2,110 @@
 document.addEventListener("DOMContentLoaded", function(e) { 
   // need a list of words 
   const wordBank = ['pantaloons', 'knickers', 'bottoms', 'slacks', 'jeans', 'culottes', 'overalls', 'shorts', 'leggings', 'jeggings', 'cargo', 'britches', 'trousers', 'burmudas', 'bloomers', 'underpants', 'chaps', 'longjohns', 'corduroys', 'denims', 'drawers', 'dungarees', 'jodhpurs', 'boxers', 'capri', 'smarty', 'sassy'];
-  
-  // need to have an alphabet array 
+
 	const alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
 	//variables for DOM elem
 	const alpha = document.getElementById('alphabet');
 
-  function play(){
-    let userGuess;
-    const randoWord = wordBank[ Math.floor(Math.random() * wordBank.length) ];
-  	let misses = [];//will need to know how many bad guesses = a loss. 6
+  let misses = [];//will need to know how many bad guesses = a loss. 6
+  let hits = [];
+  let userGuess;
+  const regExLetters = /^[a-z]+$/i;
+
+  function handleHits(guess){
+    if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
+      alert("you've guessed that letter already. Try again.");
+    } 
+    else {
+      hits.push(guess);
+      randoWordArr.forEach((ltr, idx) => {
+        if(userGuess === ltr){
+          wordArrDashes[idx] = ` ${ltr} `;
+          dashesHTML.innerHTML = wordArrDashes;
+        }
+      });
+    }
+    console.log(hits);
+  }
+
+  function handleMisses(guess){
+    if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
+      alert("you've guessed that letter already. Try again.");
+    }else {
+      misses.push(guess);
+      for(let i = 0; i < misses.length; i++){
+            let bodyPartSeen = document.getElementById(`body-${i+1}`);
+              bodyPartSeen.style.opacity = "1";
+      }
+    }
     console.log(misses);
-  
+  }
+
+  function checkLoss(){
+    if(misses.length >6){
+      alert("you lost");
+    }else{
+      return
+    }
+  }
+
+  // function play(){
+    const randoWord = wordBank[ Math.floor(Math.random() * wordBank.length) ];
+    console.log(randoWord);
     let randoWordArr = randoWord.split('');
-    //convert the random word into dashes and put them into the DOM
     let wordArrDashes = randoWordArr.map(ltr => ' _ ');
     let dashesHTML = document.getElementById('word');
-   
     dashesHTML.innerHTML = wordArrDashes;
 
     //dealing with getting the user's choice
     document.onkeyup = function(e) {
-      // Determines which key was pressed.
-      userGuess = e.key;
-     //stop, validate, and listen
-      if(alphabet.indexOf(userGuess) < 0){
+      userGuess = e.key; 
+
+      if(regExLetters.test(userGuess) === false){
         alert('That is not a letter. Please choose a letter.');
       }
       //if valid ..
       else{
         //if not in the word ...
         if(randoWordArr.indexOf(userGuess) === -1){
-          misses.push(userGuess);
-          //set opacity to 1 so the svg is seen
-          for(let i = 0; i < misses.length; i++){
-            let bodyPartSeen = document.getElementById(`body-${i+1}`);
-              bodyPartSeen.style.opacity = "1";
-          }
+          handleMisses(userGuess);
+          console.log(misses);
         //if in the word
         }
         else {
-          // arr.forEach(function callback(currentValue, index, array) {
-          //     //your iterator
-          // }[, thisArg]);
+          handleHits(userGuess);
           //for when the letter is in the rando word array:
-          randoWordArr.forEach((ltr, idx) => {
-            console.log(`letter is ${ltr} at index ${i}`);
-            if(userGuess === ltr){
-              wordArrDashes[idx] = ` ${ltr} `;
-              dashesHTML.innerHTML = wordArrDashes;
-            }
-          })
-          
+             
         }
       }
+      console.log(`hits: ${hits.length} and misses: ${misses.length}`);
+
+     
+      // function checkWin(){
+        if(hits.length === randoWord.length){
+          alert("You won!");
+        }else if(misses.length === 6){
+          alert("you lost");
+        }
+      // }
+
     }
 
     //functions to check for win /loss
 
   	//make buttons for each letter of the alphabet
-  	let alphaHTML = [];
-  	for(let a = 0; a < alphabet.length; a++){
-  		alphaHTML.push(`<div class="alphaBtn" id="${alphabet[a].toLowerCase()}">${alphabet[a]}</div>`);
-  	}
-  	console.log(alphaHTML[0]);
-  	alpha.innerHTML = alphaHTML;
-  }
+    let alphaHTML = [];
+    for(let a = 0; a < alphabet.length; a++){
+    	alphaHTML.push(`<div class="alphaBtn" id="${alphabet[a]}">${alphabet[a]}</div>`);
+    }
+    console.log(alphaHTML[0]);
+    alpha.innerHTML = alphaHTML;
+  // }
   
 
 
-
-play();
+// play();
 
 
 });
@@ -101,6 +133,7 @@ play();
 
 // ?store guessed letters in another array and remove them from alpha?
 // store incorrect guesses in an array. number of letters = number of parts shown?
-
+// validate for letter vs other key
+// check to see if letter's been guessed
 // announce win or loss
 // offer to play again
