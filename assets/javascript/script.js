@@ -13,44 +13,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
   let userGuess;
   const regExLetters = /^[a-z]+$/i;
 
-  function handleHits(guess){
-    if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
-      alert("you've guessed that letter already. Try again.");
-    } 
-    else {
-      hits.push(guess);
-      randoWordArr.forEach((ltr, idx) => {
-        if(userGuess === ltr){
-          wordArrDashes[idx] = ` ${ltr} `;
-          dashesHTML.innerHTML = wordArrDashes;
-        }
-      });
-    }
-    console.log(hits);
-  }
 
-  function handleMisses(guess){
-    if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
-      alert("you've guessed that letter already. Try again.");
-    }else {
-      misses.push(guess);
-      for(let i = 0; i < misses.length; i++){
-            let bodyPartSeen = document.getElementById(`body-${i+1}`);
-              bodyPartSeen.style.opacity = "1";
-      }
-    }
-    console.log(misses);
-  }
-
-  function checkLoss(){
-    if(misses.length >6){
-      alert("you lost");
-    }else{
-      return
-    }
-  }
-
-  // function play(){
     const randoWord = wordBank[ Math.floor(Math.random() * wordBank.length) ];
     console.log(randoWord);
     let randoWordArr = randoWord.split('');
@@ -70,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
         //if not in the word ...
         if(randoWordArr.indexOf(userGuess) === -1){
           handleMisses(userGuess);
-          console.log(misses);
         //if in the word
         }
         else {
@@ -81,17 +43,41 @@ document.addEventListener("DOMContentLoaded", function(e) {
       }
       console.log(`hits: ${hits.length} and misses: ${misses.length}`);
 
-     
-      // function checkWin(){
-        if(hits.length === randoWord.length){
-          alert("You won!");
-        }else if(misses.length === 6){
-          alert("you lost");
+      function handleHits(guess){
+        if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
+          alert("you've guessed that letter already. Try again.");
+        } 
+        else {
+          hits.push(guess);
+          randoWordArr.forEach((ltr, idx) => {
+            if(userGuess === ltr){
+              wordArrDashes[idx] = ` ${ltr} `;
+              dashesHTML.innerHTML = wordArrDashes;
+            }
+          });
+          for(let i = 0; i < hits.length; i++){
+            let letter = document.getElementById(`${hits[i]}`);
+            letter.style.color = "rgba(234, 230, 229, 0.2)";
+          }
         }
-      // }
+      };
+
+      function handleMisses(guess){
+        if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
+          alert("you've guessed that letter already. Try again.");
+        }else {
+          misses.push(guess);
+          for(let i = 0; i < misses.length; i++){
+            let bodyPartSeen = document.getElementById(`body-${i+1}`);
+            bodyPartSeen.style.opacity = "1";
+            let letter = document.getElementById(`${misses[i]}`);
+            letter.style.color = "rgba(236, 11, 67, 1)";
+          }
+        }
+      };
+
 
     }
-
     //functions to check for win /loss
 
   	//make buttons for each letter of the alphabet
@@ -101,11 +87,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     }
     console.log(alphaHTML[0]);
     alpha.innerHTML = alphaHTML;
-  // }
-  
-
-
-// play();
+  // play();
 
 
 });
