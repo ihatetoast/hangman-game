@@ -34,8 +34,7 @@ header {
     color: #373a40; }
   @media screen and (min-width: 564px) {
     header {
-      font-size: 2.5em;
-      padding: 0.45em; } }
+      font-size: 2.5em; } }
 
 section {
   display: flex;
@@ -129,7 +128,6 @@ section {
   padding: 0.5em; }
   @media screen and (min-width: 564px) {
     .alphabet {
-      width: 50%;
       border: 1em solid #d4b181; } }
 
 .alphaBtn, .word {
@@ -143,8 +141,7 @@ section {
   height: 1em;
   display: inline-block;
   text-align: center;
-  margin: 0.1em;
-  border-radius: 50%; }
+  margin: 0.1em auto; }
   @media screen and (min-width: 564px) {
     .alphaBtn {
       width: 1.5em;
@@ -160,7 +157,8 @@ section {
   color: #eae6e5; }
   .wordToGuess h1 {
     font-family: 'Pompiere', sans-serif;
-    font-size: 1.5em; }
+    font-size: 1em;
+    margin-bottom: 1em; }
 
 footer {
   flex-shrink: 0;
