@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     alphaHTML.push(`<div class="alphaBtn" id="${alphabet[a]}">${alphabet[a]}</div>`);
   }
   alpha.innerHTML = alphaHTML.join(''); 
+  
 
   //ME VARS OF ARRS
     //have user choose theme ... eventually
@@ -30,6 +31,10 @@ document.addEventListener("DOMContentLoaded", function(e) {
     const code = ['javascript', 'react', 'angular', 'vue', 'elixir', 'ruby', 'rails', 'node', 'ember', 'java', 'python', 'laravel', 'php', 'coffeescript', 'pseudo', 'fortran', 'julia', 'bash', 'zsh', 'cobol', 'erlang', 'clojure', 'ecma', 'typescrips', 'express', 'swift', 'sql', 'scratch', 'net', 'elm', 'lisp', 'basic', 'github', 'git', 'function', 'array', 'object', 'variable', 'primative', 'boolean', 'string', 'conditionals', 'loop', 'number', 'event', 'dom', 'html', 'css', 'sass', 'less', 'compile'];
     //DECLARE VAR HERE. ASSIGN IN FCNS.
     let wordBank;
+
+    //messages arrays:
+    const lossArr = ["Really? You're battling me again?", "It's cute when you try.", "You're the reason the stick-figure population has plummeted."];
+    const winArr = ["Confident enough to try again?", "You were lucky.", "Whoo hoo hoo. Don't you think you're special?"];
 
  
   // TWO FUNCTIONS: PLAY AND CHECK LETTERS.
@@ -53,19 +58,17 @@ document.addEventListener("DOMContentLoaded", function(e) {
     }
   
   function playGame(){
-    console.log("play game is fired.");
     wordBank = pants;// need a list of words 
-    const randoWord = wordBank[ Math.floor(Math.random() * wordBank.length) ];
+    const randoWord = getRando(wordBank);
+    console.log(randoWord);
     randoWordArr = randoWord.split('');
     wordArrDashes = randoWordArr.map(ltr => ' _ ');
-    console.log(`randoWord is ${randoWord}`);
     dashesHTML.textContent = wordArrDashes.join(' ');
     messages.textContent = "";
   //themes.forEach(theme => theme.addEventListener('click', getTheme));
   } //END OF PLAY GAME FCN
 
   function checkUserInput(){
-    console.log("check user input has fired.");
     document.onkeyup = function(e) {
       userGuess = e.key; 
       //validate: is choice a ltr?
@@ -73,93 +76,95 @@ document.addEventListener("DOMContentLoaded", function(e) {
         alert('That is not a letter. Please choose a letter.');
       }
       //if valid ..
-      else{
-        //if not in the word ...
+      else{//if not in the word ...
         if(randoWordArr.indexOf(userGuess) === -1){
-          console.log(`${userGuess} is NOT in the word.`);
           handleMisses(userGuess);
-          //if in the word
         } 
         else {
-          console.log(`${userGuess} IS in the word.`);
-          handleHits(userGuess);
-          //for when the letter is in the rando word array:           
+          handleHits(userGuess);      
         }
       }
     } 
-
   } // END OF CHECK USER'S INPUT FCN
 
-
+  // I need to get random words/phrases 3 times, so trying to DRY out with this:
+  function getRando(arr){
+    const rando = arr[Math.floor(Math.random() * arr.length)];
+    return rando;
+  }
+  console.log(`test random anything is ${getRando(rodents)}`);
   //     
-     // THIS FUNCTION HANDLES CORRECT GUESSES
-      function handleHits(guess){
-        if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
-          alert("you've guessed that letter already. Try again.");
-        } 
-        else {
-          hits.push(guess);
-          randoWordArr.forEach((ltr, idx) => {
-            if(userGuess === ltr){
-              wordArrDashes[idx] = ` ${ltr} `;
-              dashesHTML.innerHTML = wordArrDashes.join('');
-              checkWin();
-            }
-          });
-          for(let i = 0; i < hits.length; i++){
-            let letter = document.getElementById(`${hits[i]}`);
-            letter.style.color = "rgba(234, 230, 229, 0.2)";
-          }
+ // THIS FUNCTION HANDLES CORRECT GUESSES
+  function handleHits(guess){
+    if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
+      alert("you've guessed that letter already. Try again.");
+    } 
+    else {
+      hits.push(guess);
+      randoWordArr.forEach((ltr, idx) => {
+        if(userGuess === ltr){
+          wordArrDashes[idx] = ` ${ltr} `;
+          dashesHTML.innerHTML = wordArrDashes.join('');
+          checkWin();
         }
+      });
+      for(let i = 0; i < hits.length; i++){
+        let letter = document.getElementById(`${hits[i]}`);
+        letter.style.color = "rgba(234, 230, 229, 0.2)";
       }
+    }
+  }
 // THIS FUNCTION HANDLES BAD GUESSES:
-      function handleMisses(guess){
-        if(misses.indexOf(guess) > -1 || hits.indexOf(guess) > -1){
-          alert("you've guessed that letter already. Try again.");
-        } else {
-          misses.push(guess);
-          for(let i = 0; i < misses.length; i++){
-            let bodyPartSeen = document.getElementById(`body-${i+1}`);
-            bodyPartSeen.style.opacity = "1";
-            let letter = document.getElementById(`${misses[i]}`);
-            letter.style.color = "rgba(236, 11, 67, 1)";
-          }
-          wrongGuesses += 1;
-          console.log(wrongGuesses);
-          checkLoss();
-        }
+  function handleMisses(guess){
+    if(misses.indexOf(guess) > -1 || hits.indexOf(guess) > -1){
+      alert("you've guessed that letter already. Try again.");
+    } else {
+      misses.push(guess);
+      for(let i = 0; i < misses.length; i++){
+        let bodyPartSeen = document.getElementById(`body-${i+1}`);
+        bodyPartSeen.style.opacity = "1";
+        let letter = document.getElementById(`${misses[i]}`);
+        letter.style.color = "rgba(236, 11, 67, 1)";
       }
-      function checkWin(){
-        if(wordArrDashes.indexOf(' _ ') === -1){
-          messages.textContent = "You won, hun bun!";
-          reset("Confident enough to try again?");
-        } else {
-          return;
-        }
-      }
-      function checkLoss(){
-        if(wrongGuesses >= 6){
-          const deadFace = document.getElementById('body-7');
-          deadFace.style.opacity = "1";
-          messages.textContent = "Toodle-loos. You lose";
-          reset("Really? You're battling me again?")
-        } else {
-          return;
-        }
-      }
-
-      function reset(message){
-        hits = [];
-        misses = [];
-        wrongGuesses = 0;
-        messages.textContent = message;
-        setTimeout(()=>{
-          playGame();
-        }, 2000);
-       
-      }
+      wrongGuesses += 1;
+      checkLoss();
+    }
+  }
+  function checkWin(){
+    if(wordArrDashes.indexOf(' _ ') === -1){
+      messages.textContent = "You won, hun bun!";
+      setTimeout(()=>{
+        reset(winArr);
+      }, 1500);
+    } else {
+      return;
+    }
+  }
+  function checkLoss(){
+    if(wrongGuesses >= 6){
+      const deadFace = document.getElementById('body-7');
+      deadFace.style.opacity = "1";
+      messages.textContent = "Toodle-loos. You lose";
+      setTimeout(()=>{
+        reset(lossArr);
+      }, 1500);
+    } else {
+      return;
+    }
+  }
+  function reset(array){
+    hits = [];
+    misses = [];
+    wrongGuesses = 0;
+    messages.textContent = getRando(array);
+    setTimeout(()=>{
+      playGame();
+    }, 2000);
+  }
       
-   
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }); //this is the end of doc load fcn. do not delete!
 
 
