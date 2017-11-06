@@ -41,10 +41,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
   let misses = [];//will need to know how many bad guesses = a loss. 6
   let hits = [];
   let wrongGuesses = 0;
-  let totalWins = 0;
   let userGuess;
-  let randoWordArr
-  let hasWon = false;
+  let randoWordArr;
+  let wordArrDashes;
 
 //PLAY GAME
     //DONKEY UP: FIRE PLAYGAME()
@@ -56,17 +55,17 @@ document.addEventListener("DOMContentLoaded", function(e) {
   function playGame(){
     console.log("play game is fired.");
     wordBank = pants;// need a list of words 
-    console.log(`wordBank is ${wordBank}`);
     const randoWord = wordBank[ Math.floor(Math.random() * wordBank.length) ];
     randoWordArr = randoWord.split('');
-    let wordArrDashes = randoWordArr.map(ltr => ' _ ');
+    wordArrDashes = randoWordArr.map(ltr => ' _ ');
     console.log(`randoWord is ${randoWord}`);
     dashesHTML.textContent = wordArrDashes.join(' ');
+    messages.textContent = "";
   //themes.forEach(theme => theme.addEventListener('click', getTheme));
   } //END OF PLAY GAME FCN
 
   function checkUserInput(){
-    console.log("check user ");
+    console.log("check user input has fired.");
     document.onkeyup = function(e) {
       userGuess = e.key; 
       //validate: is choice a ltr?
@@ -78,77 +77,88 @@ document.addEventListener("DOMContentLoaded", function(e) {
         //if not in the word ...
         if(randoWordArr.indexOf(userGuess) === -1){
           console.log(`${userGuess} is NOT in the word.`);
-          // handleMisses(userGuess);
+          handleMisses(userGuess);
           //if in the word
         } 
         else {
           console.log(`${userGuess} IS in the word.`);
-          // handleHits(userGuess);
+          handleHits(userGuess);
           //for when the letter is in the rando word array:           
         }
       }
     } 
+
   } // END OF CHECK USER'S INPUT FCN
 
-  //     //GETS THE USER'S CHOICE
-  //     
-  //    // THIS FUNCTION HANDLES CORRECT GUESSES
-  //     function handleHits(guess){
-  //       if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
-  //         alert("you've guessed that letter already. Try again.");
-  //       } 
-  //       else {
-  //         hits.push(guess);
-  //         randoWordArr.forEach((ltr, idx) => {
-  //           if(userGuess === ltr){
-  //             wordArrDashes[idx] = ` ${ltr} `;
-  //             dashesHTML.innerHTML = wordArrDashes.join('');
-  //             checkWin();
-  //           }
-  //         });
-  //         for(let i = 0; i < hits.length; i++){
-  //           let letter = document.getElementById(`${hits[i]}`);
-  //           letter.style.color = "rgba(234, 230, 229, 0.2)";
-  //         }
-  //       }
-  //     }
-  //      // THIS FUNCTION HANDLES BAD GUESSES:
-  //     function handleMisses(guess){
-  //       if(misses.indexOf(guess) > -1 || hits.indexOf(guess) > -1){
-  //         alert("you've guessed that letter already. Try again.");
-  //       } else {
-  //         misses.push(guess);
-  //         for(let i = 0; i < misses.length; i++){
-  //           let bodyPartSeen = document.getElementById(`body-${i+1}`);
-  //           bodyPartSeen.style.opacity = "1";
-  //           let letter = document.getElementById(`${misses[i]}`);
-  //           letter.style.color = "rgba(236, 11, 67, 1)";
-  //         }
-  //         wrongGuesses += 1;
-  //         console.log(wrongGuesses);
-  //         checkLoss();
-  //       }
-  //     }
-  //     function checkWin(){
-  //       if(wordArrDashes.indexOf(' _ ') === -1){
-  //         messages.textContent = "You won, hun bun!";
-  //       } else {
-  //         return;
-  //       }
-  //     }
-  //     function checkLoss(){
-  //       if(wrongGuesses >= 6){
-  //         const deadFace = document.getElementById('body-7');
-  //         deadFace.style.opacity = "1";
-  //         messages.textContent = "Toodle-loos. You lose";
-  //       } else {
-  //         return;
-  //       }
-  //     }
-  // } 
-  
-      // playGame();
 
+  //     
+     // THIS FUNCTION HANDLES CORRECT GUESSES
+      function handleHits(guess){
+        if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
+          alert("you've guessed that letter already. Try again.");
+        } 
+        else {
+          hits.push(guess);
+          randoWordArr.forEach((ltr, idx) => {
+            if(userGuess === ltr){
+              wordArrDashes[idx] = ` ${ltr} `;
+              dashesHTML.innerHTML = wordArrDashes.join('');
+              checkWin();
+            }
+          });
+          for(let i = 0; i < hits.length; i++){
+            let letter = document.getElementById(`${hits[i]}`);
+            letter.style.color = "rgba(234, 230, 229, 0.2)";
+          }
+        }
+      }
+// THIS FUNCTION HANDLES BAD GUESSES:
+      function handleMisses(guess){
+        if(misses.indexOf(guess) > -1 || hits.indexOf(guess) > -1){
+          alert("you've guessed that letter already. Try again.");
+        } else {
+          misses.push(guess);
+          for(let i = 0; i < misses.length; i++){
+            let bodyPartSeen = document.getElementById(`body-${i+1}`);
+            bodyPartSeen.style.opacity = "1";
+            let letter = document.getElementById(`${misses[i]}`);
+            letter.style.color = "rgba(236, 11, 67, 1)";
+          }
+          wrongGuesses += 1;
+          console.log(wrongGuesses);
+          checkLoss();
+        }
+      }
+      function checkWin(){
+        if(wordArrDashes.indexOf(' _ ') === -1){
+          messages.textContent = "You won, hun bun!";
+          reset("Confident enough to try again?");
+        } else {
+          return;
+        }
+      }
+      function checkLoss(){
+        if(wrongGuesses >= 6){
+          const deadFace = document.getElementById('body-7');
+          deadFace.style.opacity = "1";
+          messages.textContent = "Toodle-loos. You lose";
+          reset("Really? You're battling me again?")
+        } else {
+          return;
+        }
+      }
+
+      function reset(message){
+        hits = [];
+        misses = [];
+        wrongGuesses = 0;
+        messages.textContent = message;
+        setTimeout(()=>{
+          playGame();
+        }, 2000);
+       
+      }
+      
    
 }); //this is the end of doc load fcn. do not delete!
 
