@@ -1,43 +1,161 @@
 //load first. not nec here, but taking no chances with SVGs
 document.addEventListener("DOMContentLoaded", function(e) { 
+  alert('Press any key to start.');
 
-  // need a list of words 
-  //ME VARS OF ARRS
-  //have user choose theme ... eventually
-  const rodents = ['chipmunk', 'marmot', 'woodchuck', 'squirrel', 'gopher', 'mice', 'rat', 'gerbil', 'hamster', 'lemming', 'mouse', 'vole', 'porcupine', 'capybara', 'agouti', 'cavy', 'chinchilla', 'dormouse', 'octodon', 'nutria', 'tucotuco', 'muskrat'];
-  const pants = ['pantaloons', 'knickers', 'bottoms', 'slacks', 'jeans', 'culottes', 'overalls', 'shorts', 'leggings', 'jeggings', 'cargo', 'britches', 'trousers', 'burmudas', 'bloomers', 'underpants', 'chaps', 'longjohns', 'corduroys', 'denims', 'drawers', 'dungarees', 'jodhpurs', 'boxers', 'capri', 'smarty', 'sassy'];
-  const code = ['javascript', 'react', 'angular', 'vue', 'elixir', 'ruby', 'rails', 'node', 'ember', 'java', 'python', 'laravel', 'php', 'coffeescript', 'pseudo', 'fortran', 'julia', 'bash', 'zsh', 'cobol', 'erlang', 'clojure', 'ecma', 'typescrips', 'express', 'swift', 'sql', 'scratch', 'net', 'elm', 'lisp', 'basic', 'github', 'git', 'function', 'array', 'object', 'variable', 'primative', 'boolean', 'string', 'conditionals', 'loop', 'number', 'event', 'dom', 'html', 'css', 'sass', 'less', 'compile'];
-
-  let wordBank = pants;
-	const alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
- 
- //ME VARS
-  let misses = [];//will need to know how many bad guesses = a loss. 6
-  let hits = [];
-  let alphaHTML = [];
-  let wrongGuesses = 0;
-  let totalWins = 0;
-  let userGuess;
-  let hasWon = false;
-
-
-  //HELPERS
-  const regExLetters = /^[a-z]+$/i;
-  const randoNummo = Math.floor(Math.random() * wordBank.length);
-
-  //VARIABLES FOR DOM ELEMENTS
+  //VARIABLES FOR DOM ELEMENTS: OK TO BE GLOBAL...i think.
   const alpha = document.getElementById('alphabet');//for the chalkboard letters
   const dashesHTML = document.getElementById('word'); //for the dashes
   const messages = document.getElementById('messages'); //for messages to user
   // const themes = document.querySelectorAll('.theme');
-  
+
+  //HELPERS: OK TO BE GLOBAL
+  const regExLetters = /^[a-z]+$/i;
+
+  //SET UP CHALKBOARD: 
+  const alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+   let alphaHTML = [];
   //ON LOADING, WRITE LETTERS ON CHALKBOARD
   for(let a = 0; a < alphabet.length; a++){
-      alphaHTML.push(`<div class="alphaBtn" id="${alphabet[a]}">${alphabet[a]}</div>`);
+    alphaHTML.push(`<div class="alphaBtn" id="${alphabet[a]}">${alphabet[a]}</div>`);
   }
   alpha.innerHTML = alphaHTML.join(''); 
+
+  //ME VARS OF ARRS
+    //have user choose theme ... eventually
+    //TAS! I WANT TO HAVE THE BUTTONS WORKING WHERE I CHOOSE A THEME. I'VE TRIED. IF I DON'T GET IT DONE, WILL YOU HELP?
+  //I'M LEAVING MY THEME ATTEMPTS IN, BUT COMMENTED OUT.
+  //I'm thinking this would be good as an obj with a this.wordBank: rodens inside a method, but i'm too far gone to start over and while i've had a lot of algorithm experience with JS, i suck at OOP and therefore fear all objects, even outside of OOP.
+    const rodents = ['chipmunk', 'marmot', 'woodchuck', 'squirrel', 'gopher', 'mice', 'rat', 'gerbil', 'hamster', 'lemming', 'mouse', 'vole', 'porcupine', 'capybara', 'agouti', 'cavy', 'chinchilla', 'dormouse', 'octodon', 'nutria', 'tucotuco', 'muskrat'];
+    const pants = ['pantaloons', 'knickers', 'bottoms', 'slacks', 'jeans', 'culottes', 'overalls', 'shorts', 'leggings', 'jeggings', 'cargo', 'britches', 'trousers', 'burmudas', 'bloomers', 'underpants', 'chaps', 'longjohns', 'corduroys', 'denims', 'drawers', 'dungarees', 'jodhpurs', 'boxers', 'capri', 'smarty', 'sassy'];
+    const code = ['javascript', 'react', 'angular', 'vue', 'elixir', 'ruby', 'rails', 'node', 'ember', 'java', 'python', 'laravel', 'php', 'coffeescript', 'pseudo', 'fortran', 'julia', 'bash', 'zsh', 'cobol', 'erlang', 'clojure', 'ecma', 'typescrips', 'express', 'swift', 'sql', 'scratch', 'net', 'elm', 'lisp', 'basic', 'github', 'git', 'function', 'array', 'object', 'variable', 'primative', 'boolean', 'string', 'conditionals', 'loop', 'number', 'event', 'dom', 'html', 'css', 'sass', 'less', 'compile'];
+    //DECLARE VAR HERE. ASSIGN IN FCNS.
+    let wordBank;
+
  
-  //THIS FUNCTION CHOOSES THE THEME
+  // TWO FUNCTIONS: PLAY AND CHECK LETTERS.
+  // PLAY STARTS GAME. VARIABLES START AT 0 OR EMPTY ARRAYS 
+  // CHECK LETTERS DEALS WITH USER INPUT. 
+
+
+ //ME VARS
+  let misses = [];//will need to know how many bad guesses = a loss. 6
+  let hits = [];
+  let wrongGuesses = 0;
+  let totalWins = 0;
+  let userGuess;
+  let randoWordArr
+  let hasWon = false;
+
+//PLAY GAME
+    //DONKEY UP: FIRE PLAYGAME()
+    document.onkeyup = function(e){
+      playGame();
+      checkUserInput();
+    }
+  
+  function playGame(){
+    console.log("play game is fired.");
+    wordBank = pants;// need a list of words 
+    console.log(`wordBank is ${wordBank}`);
+    const randoWord = wordBank[ Math.floor(Math.random() * wordBank.length) ];
+    randoWordArr = randoWord.split('');
+    let wordArrDashes = randoWordArr.map(ltr => ' _ ');
+    console.log(`randoWord is ${randoWord}`);
+    dashesHTML.textContent = wordArrDashes.join(' ');
+  //themes.forEach(theme => theme.addEventListener('click', getTheme));
+  } //END OF PLAY GAME FCN
+
+  function checkUserInput(){
+    console.log("check user ");
+    document.onkeyup = function(e) {
+      userGuess = e.key; 
+      //validate: is choice a ltr?
+      if(regExLetters.test(userGuess) === false){
+        alert('That is not a letter. Please choose a letter.');
+      }
+      //if valid ..
+      else{
+        //if not in the word ...
+        if(randoWordArr.indexOf(userGuess) === -1){
+          console.log(`${userGuess} is NOT in the word.`);
+          // handleMisses(userGuess);
+          //if in the word
+        } 
+        else {
+          console.log(`${userGuess} IS in the word.`);
+          // handleHits(userGuess);
+          //for when the letter is in the rando word array:           
+        }
+      }
+    } 
+  } // END OF CHECK USER'S INPUT FCN
+
+  //     //GETS THE USER'S CHOICE
+  //     
+  //    // THIS FUNCTION HANDLES CORRECT GUESSES
+  //     function handleHits(guess){
+  //       if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
+  //         alert("you've guessed that letter already. Try again.");
+  //       } 
+  //       else {
+  //         hits.push(guess);
+  //         randoWordArr.forEach((ltr, idx) => {
+  //           if(userGuess === ltr){
+  //             wordArrDashes[idx] = ` ${ltr} `;
+  //             dashesHTML.innerHTML = wordArrDashes.join('');
+  //             checkWin();
+  //           }
+  //         });
+  //         for(let i = 0; i < hits.length; i++){
+  //           let letter = document.getElementById(`${hits[i]}`);
+  //           letter.style.color = "rgba(234, 230, 229, 0.2)";
+  //         }
+  //       }
+  //     }
+  //      // THIS FUNCTION HANDLES BAD GUESSES:
+  //     function handleMisses(guess){
+  //       if(misses.indexOf(guess) > -1 || hits.indexOf(guess) > -1){
+  //         alert("you've guessed that letter already. Try again.");
+  //       } else {
+  //         misses.push(guess);
+  //         for(let i = 0; i < misses.length; i++){
+  //           let bodyPartSeen = document.getElementById(`body-${i+1}`);
+  //           bodyPartSeen.style.opacity = "1";
+  //           let letter = document.getElementById(`${misses[i]}`);
+  //           letter.style.color = "rgba(236, 11, 67, 1)";
+  //         }
+  //         wrongGuesses += 1;
+  //         console.log(wrongGuesses);
+  //         checkLoss();
+  //       }
+  //     }
+  //     function checkWin(){
+  //       if(wordArrDashes.indexOf(' _ ') === -1){
+  //         messages.textContent = "You won, hun bun!";
+  //       } else {
+  //         return;
+  //       }
+  //     }
+  //     function checkLoss(){
+  //       if(wrongGuesses >= 6){
+  //         const deadFace = document.getElementById('body-7');
+  //         deadFace.style.opacity = "1";
+  //         messages.textContent = "Toodle-loos. You lose";
+  //       } else {
+  //         return;
+  //       }
+  //     }
+  // } 
+  
+      // playGame();
+
+   
+}); //this is the end of doc load fcn. do not delete!
+
+
+
+
+//THIS FUNCTION CHOOSES THE THEME
   //TRYING TO ASSIGN THEME BY USING DATASETS AND I'M JUST GETTING THE SHITS!
   //node list is array-ish. loop over and add evt listener
     //listen for click on button
@@ -53,105 +171,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
     //   console.log(this.dataset.theme);
     //   wordBank = this.dataset.theme;
     // }
-
-
-    function playGame(){
-
-      const randoWord = wordBank[ randoNummo ];
-      let randoWordArr = randoWord.split('');
-      let wordArrDashes = randoWordArr.map(ltr => ' _ ');
-      console.log(randoWord);
-      dashesHTML.textContent = wordArrDashes.join(' ');
-      // themes.forEach(theme => theme.addEventListener('click', getTheme));
-
-      //GETS THE USER'S CHOICE
-      document.onkeyup = function(e) {
-        userGuess = e.key; 
-        //validate: is choice a ltr?
-        if(regExLetters.test(userGuess) === false){
-          alert('That is not a letter. Please choose a letter.');
-        }
-        //if valid ..
-        else{
-          //if not in the word ...
-          if(randoWordArr.indexOf(userGuess) === -1){
-            handleMisses(userGuess);
-          //if in the word
-          }
-          else {
-            handleHits(userGuess);
-            //for when the letter is in the rando word array:           
-          }
-        }
-     } 
-     // THIS FUNCTION HANDLES CORRECT GUESSES
-      function handleHits(guess){
-        if(misses.indexOf(guess) > -1 || hits.indexOf(guess)> -1){
-          alert("you've guessed that letter already. Try again.");
-        } 
-        else {
-          hits.push(guess);
-          randoWordArr.forEach((ltr, idx) => {
-            if(userGuess === ltr){
-              wordArrDashes[idx] = ` ${ltr} `;
-              dashesHTML.innerHTML = wordArrDashes.join('');
-              checkWin();
-            }
-          });
-          for(let i = 0; i < hits.length; i++){
-            let letter = document.getElementById(`${hits[i]}`);
-            letter.style.color = "rgba(234, 230, 229, 0.2)";
-          }
-        }
-      }
-       // THIS FUNCTION HANDLES BAD GUESSES:
-      function handleMisses(guess){
-        if(misses.indexOf(guess) > -1 || hits.indexOf(guess) > -1){
-          alert("you've guessed that letter already. Try again.");
-        } else {
-          misses.push(guess);
-          for(let i = 0; i < misses.length; i++){
-            let bodyPartSeen = document.getElementById(`body-${i+1}`);
-            bodyPartSeen.style.opacity = "1";
-            let letter = document.getElementById(`${misses[i]}`);
-            letter.style.color = "rgba(236, 11, 67, 1)";
-          }
-          wrongGuesses += 1;
-          console.log(wrongGuesses);
-          checkLoss();
-        }
-      }
-      function checkWin(){
-        if(wordArrDashes.indexOf(' _ ') === -1){
-          messages.textContent = "You won, hun bun!";
-        } else {
-          return;
-        }
-      }
-      function checkLoss(){
-        if(wrongGuesses >= 6){
-          const deadFace = document.getElementById('body-7');
-          deadFace.style.opacity = "1";
-          messages.textContent = "Toodle-loos. You lose";
-        } else {
-          return;
-        }
-      }
-  } 
-    // document.addEventListener('keypress', (e) => {
-    //   console.log("start game now");
-    //   playGame();
-    // });
-
-      playGame();
-
-   
-}); 
-
-
-
-
-
 
 
 
@@ -223,3 +242,11 @@ document.addEventListener("DOMContentLoaded", function(e) {
 // check to see if letter's been guessed
 // announce win or loss
 // offer to play again
+
+
+// define random word globally but set in the fcns that use it.
+// have play fcn assign random word, fill dom elems with dashes and whatnot
+// have play fcn be where scores are set at 0 and arrays are empty.
+
+// sep fcn for checking letter. that'll be where i do donkey up and 
+// checking for good/bad letters.
