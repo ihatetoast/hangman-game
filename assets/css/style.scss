@@ -43,6 +43,7 @@ $test-opacity: rgba(187, 253, 67, 0.5);
 * {
 	box-sizing: border-box;
 }
+
 // html {
 //   height: 100%;
 // }
@@ -69,6 +70,7 @@ body {
 //******************************************
 header {
 	display:flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	padding: 1em 0.1em;
@@ -79,8 +81,14 @@ header {
   h1 {
   	color: $dkgrey;
   }
+  
   @media screen and (min-width:564px){
   	font-size: 2.5em;
+  	padding: 1em;
+  }
+  @media screen and (min-width:740px){
+  	font-size: 2.5em;
+  	padding: 0.5em;
   }
 
 }
@@ -159,6 +167,37 @@ section {
 	left: 0%;
 	z-index: 2;
 }
+.alphaWordbanks{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	ul{
+		display: flex;
+		justify-content: space-around;
+		li {
+			margin: 0.5em;
+		}
+  }
+  button{
+  	background-color: $olive;
+  	color: $dkgrey;
+  	font-family: 'Pompiere', sans-serif;
+  	font-size: 1.5em;
+		font-weight: bold;
+		border: 1px solid $dkgrey;
+  	&:hover {
+  		background-color: $dkgrey;
+			color: $yellow;
+		}
+  }
+}
+.wordBanks {
+	h3 {
+		font-family: 'Pompiere', sans-serif;
+		color: $black;
+	}
+}
 .alphabet {
 	border: 0.8em solid $tan;
 	background-color: black;
@@ -198,7 +237,7 @@ section {
 	padding: 0.2em;
 	color: $white;
 	h1 {
-		font-family: 'Pompiere', sans-serif;
+		font-family: 'Cabin Sketch', sans-serif;
 		font-size: 1em;
 		margin-bottom: 1em;
 	}
