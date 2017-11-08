@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
   function playGame(){
     wordBank = pants;// need a list of words 
     const randoWord = getRando(wordBank);
+    console.log(randoWord);
     randoWordArr = randoWord.split('');
     wordArrDashes = randoWordArr.map(ltr => ' _ ');
     dashesHTML.textContent = wordArrDashes.join(' ');
@@ -65,7 +66,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
   function checkUserInput(){
     document.onkeyup = function(e) {
-      userGuess = e.key; 
+      userGuess=e.key.toLowerCase();
+      console.log(userGuess);
       //validate: is choice a ltr?
       if(regExLetters.test(userGuess) === false){
         messages.textContent = 'That is not a letter. Please choose a letter.';
