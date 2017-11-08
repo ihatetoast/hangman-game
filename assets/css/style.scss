@@ -116,6 +116,7 @@ section {
 		align-items: flex-start;
 	}
 }
+
 // GALLOWS AND HANGING MAN
 .gallowsScene {
 	position: relative;
@@ -193,14 +194,18 @@ section {
   }
 }
 .wordBanks {
+	height: 2em;
+	font-size: 1.5em;
+	line-height: 1.5em;
 	h3 {
 		font-family: 'Pompiere', sans-serif;
+		font-weight: bold;
 		color: $black;
 	}
 }
 .alphabet {
 	border: 0.8em solid $tan;
-	background-color: black;
+	background-color: $black;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -232,9 +237,11 @@ section {
 .wordToGuess{
 	display:flex;
 	flex-direction: column;
-	align-items: flex-start;
-	justify-content:center;
-	padding: 0.2em;
+	flex:1;
+	align-items: center;
+	justify-content:flex-start;
+	padding: 0.1em;
+	height: 3.3em;
 	color: $white;
 	h1 {
 		font-family: 'Cabin Sketch', sans-serif;
