@@ -3,4 +3,4 @@
 ## tools
 * Vanilla JavaScript
 * Sass
-* SVGs by me, so do not judge!
+* SVG illustrations by Sketch
