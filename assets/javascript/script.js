@@ -96,6 +96,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
  // THIS FUNCTION HANDLES CORRECT GUESSES
   function handleHits(guess){
+    //target the audio html5 elem by data name
+    const audio = document.querySelector(`audio[data-name="teehee"]`);
+    audio.play();
     hits.push(guess);
     randoWordArr.forEach((ltr, idx) => {
       if(userGuess === ltr){
@@ -112,6 +115,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
   }
 // THIS FUNCTION HANDLES BAD GUESSES:
   function handleMisses(guess){
+    const audio = document.querySelector(`audio[data-name="doooh"]`);
+    audio.play();
     misses.push(guess);
     for(let i = 0; i < misses.length; i++){
       bodyPartSeen = document.getElementById(`body-${i+1}`);
