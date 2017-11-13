@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
   const alpha = document.getElementById('alphabet');//for the chalkboard letters
   const dashesHTML = document.getElementById('word'); //for the dashes
   const messages = document.getElementById('messages'); //for messages to user
+  const winsTally = document.getElementById('winsTally'); // for showing the wins
 
   let bodyPartSeen;
   let letter;
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
   //SET UP CHALKBOARD: 
   const alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+
   let alphaHTML = [];
   //ON LOADING, WRITE LETTERS ON CHALKBOARD
   for(let a = 0; a < alphabet.length; a++){
@@ -40,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
  //ME VARS
   let misses = [];//will need to know how many bad guesses = a loss. 6
   let hits = [];
+  let wins = 0;
   let wrongGuesses = 0;
   let userGuess;
   let randoWordArr;
@@ -53,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     }
   
   function playGame(){
+    let wins = 0;
     wordBank = pants;// need a list of words 
     const randoWord = getRando(wordBank);
     console.log(randoWord);
@@ -66,14 +70,14 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
   function checkUserInput(){
     document.onkeyup = function(e) {
-      userGuess=e.key.toLowerCase();
-      console.log(userGuess);
+      userGuess = e.key.toLowerCase();
+      // console.log(`userguess is ${userGuess}`);
       //validate: is choice a ltr?
       if(regExLetters.test(userGuess) === false){
         messages.textContent = 'That is not a letter. Please choose a letter.';
       } 
       //if already done:
-      else if(misses.indexOf(userGuess) > -1 || hits.indexOf(userGuess)> -1){
+      else if(misses.indexOf(userGuess) > -1 || hits.indexOf(userGuess) > -1){
         messages.textContent = "You've guessed that letter already. Try again.";
       }
       //if valid ..
@@ -82,7 +86,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
           handleMisses(userGuess);
         } 
         else {
-          handleHits(userGuess);      
+
+          handleHits(userGuess);
         }
       }
     } 
@@ -128,10 +133,13 @@ document.addEventListener("DOMContentLoaded", function(e) {
     wrongGuesses += 1;
     checkLoss();
   }
-  
+  //keep trak of wins
+
   function checkWin(){
+    
     if(wordArrDashes.indexOf(' _ ') === -1){
-      messages.textContent = "You won, hun bun!";
+      messages.textContent = `You won, hun bun. (${wins} times)`;
+      wins ++;
       setTimeout(()=>{
         reset(winArr);
       }, 1500);
@@ -156,6 +164,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     misses = [];
     wrongGuesses = 0;
     messages.textContent = getRando(array);
+    winsTally.textContent = wins;
     //pause before changing letters back and playing game over.
     setTimeout(()=>{
       for(let i = 0; i < 7; i++){
@@ -226,6 +235,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
 //check indexOf word against letter guessed.
 //swap out dash for correct letter
+
 //incorrect guesses get posted and a body part appears. 
  //playing the game:
       //check if user choice is valid
@@ -255,3 +265,5 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
 // sep fcn for checking letter. that'll be where i do donkey up and 
 // checking for good/bad letters.
+
+
