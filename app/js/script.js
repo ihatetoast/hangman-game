@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
   let misses = []; //will need to know how many bad guesses = a loss. 6
   let hits = [];
   let wins = 0;
+  let losses = 0;
   let wrongGuesses = 0;
   let userGuess;
   let randoWordArr;
@@ -137,10 +138,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
   };
 
   function playGame() {
-    let wins = 0;
+    // let wins = 0;
     wordBank = pants; // need a list of words
     const randoWord = getRando(wordBank);
-    console.log(randoWord);
     randoWordArr = randoWord.split('');
     wordArrDashes = randoWordArr.map(ltr => ' _ ');
     dashesHTML.textContent = wordArrDashes.join(' ');
