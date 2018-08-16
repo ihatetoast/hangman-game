@@ -1,104 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>Hangman | Katy Cassidy</title>
-		<link href="https://fonts.googleapis.com/css?family=Cabin+Sketch|Pompiere|Ultra" rel="stylesheet">
-		<link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.ico">		<link rel="stylesheet" href="./assets/css/reset.css">
-		<link rel="stylesheet" href="./assets/css/style.css">
-	</head>
-	<body class="site">
-		<!-- 
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hangman | Katy Cassidy</title>
+  <link href="https://fonts.googleapis.com/css?family=Cabin+Sketch|Pompiere|Ultra" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.ico">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body class="site">
+  <!-- 
 		************************************************************************
 		************************************************************************
 		HEADER
 		************************************************************************
 		************************************************************************
-		 -->	
-		<header>
-			<h1>Hangman</h1>
-		</header>
-		<!-- 
+		 -->
+  <header>
+    <h1>Hangman</h1>
+  </header>
+  <!-- 
 		************************************************************************
 		************************************************************************
 		MAIN BITS
 		************************************************************************
 		************************************************************************
 		 -->
-		<div class="wrapper">
-			<section>
-				<div class="gallowsAlphabet">
+  <div class="wrapper">
+    <section>
+      <div class="gallowsAlphabet">
 
-					<div class="gallowsScene">
+        <div class="gallowsScene">
 
-						<img src="./assets/images/outside.svg" alt="backdrop of sky and grass">
-						<div class="gallows">
-							<img src="./assets/images/gallows.svg" alt="hangman's gallows">
-						</div>
-						<div class="hangingBody">
+          <img src="./assets/images/outside.svg" alt="backdrop of sky and grass">
+          <div class="gallows">
+            <img src="./assets/images/gallows.svg" alt="hangman's gallows">
+          </div>
+          <div class="hangingBody">
 
-							<div id="body-1">
-								<img src="./assets/images/hangman-head.svg" alt="hangman head">
-							</div>
-							<div id="body-7">
-								<img src="./assets/images/hangman-face.svg" alt="hangman dead eyes">
-							</div>
-							<div id="body-2">
-								<img  src="./assets/images/hangman-torso.svg" alt="hangman torso">
-							</div>
-							<div id="body-3">
-								<img  src="./assets/images/hangman-leg-left.svg" alt="hangman leg-left">
-							</div>
-							<div id="body-4">
-								<img  src="./assets/images/hangman-leg-right.svg" alt="hangman leg-right">
-							</div>
-							<div id="body-5">
-								<img  src="./assets/images/hangman-arm-left.svg" alt="hangman arm-left">
-							</div>
-							<div id="body-6">
-								<img  src="./assets/images/hangman-arm-right.svg" alt="hangman arm-right">
-							</div>
+            <div id="body-1">
+              <img src="./assets/images/hangman-head.svg" alt="hangman head">
+            </div>
+            <div id="body-7">
+              <img src="./assets/images/hangman-face.svg" alt="hangman dead eyes">
+            </div>
+            <div id="body-2">
+              <img src="./assets/images/hangman-torso.svg" alt="hangman torso">
+            </div>
+            <div id="body-3">
+              <img src="./assets/images/hangman-leg-left.svg" alt="hangman leg-left">
+            </div>
+            <div id="body-4">
+              <img src="./assets/images/hangman-leg-right.svg" alt="hangman leg-right">
+            </div>
+            <div id="body-5">
+              <img src="./assets/images/hangman-arm-left.svg" alt="hangman arm-left">
+            </div>
+            <div id="body-6">
+              <img src="./assets/images/hangman-arm-right.svg" alt="hangman arm-right">
+            </div>
 
-						</div> <!-- end hanging body -->
-						<div class="window">
-							<img src="./assets/images/window.svg" alt="window frame">
-						</div>
-					</div><!-- end of gallowsScene -->
-					<div class="alphaWordbanks">
-						<div class="alphabet">
-							<div id="alphabet"></div>
-							<div class="wordToGuess">
-								<div>
-									<h1>Word to guess: </h1>
-								</div>
-								<div id="word" class="word"></div>
-							</div>
-						</div> <!-- end of alphabet/chalkboard -->
-						<div class="wordBanks">
-							<h3 id="messages">Press any key to start the game.</h3>
-							<h3>Wins so far: <span id="winsTally">0</span></h3>
-						</div> <!-- end of wordBanks w/ ul li -->
-					</div>
-				</div>	<!-- end of gallowsAlphabet -->
-				
-			</section>
-		</div> <!-- end of wrapper -->
+          </div>
+          <!-- end hanging body -->
+          <div class="window">
+            <img src="./assets/images/window.svg" alt="window frame">
+          </div>
+        </div>
+        <!-- end of gallowsScene -->
+        <div class="alphaWordbanks">
+          <div class="alphabet">
+            <div id="alphabet"></div>
+            <div class="wordToGuess">
+              <div>
+                <h1>Word to guess: </h1>
+              </div>
+              <div id="word" class="word"></div>
+            </div>
+          </div>
+          <!-- end of alphabet/chalkboard -->
+          <div class="wordBanks">
+            <h3 id="messages">Press any key to start the game.</h3>
+            <h3>Wins so far:
+              <span id="winsTally">0</span>
+            </h3>
+          </div>
+          <!-- end of wordBanks w/ ul li -->
+        </div>
+      </div>
+      <!-- end of gallowsAlphabet -->
+
+    </section>
+  </div>
+  <!-- end of wrapper -->
 
 
-		<!-- 
+  <!-- 
 		************************************************************************
 		************************************************************************
 		FOOTER
 		************************************************************************
 		************************************************************************
 		 -->
-		<footer>
-			<p>Katy Cassidy | ihatetoast</p>
-		</footer>
-		<!-- audio files for hits and misses -->
-		<audio data-name="doooh" src="./assets/audio/doooh.wav"></audio>
-		<audio data-name="teehee" src="./assets/audio/teehee.wav"></audio>
-		<script src="./assets/javascript/script.js"></script>
+  <footer>
+    <p>Katy Cassidy | ihatetoast</p>
+  </footer>
+  <!-- audio files for hits and misses -->
+  <audio data-name="doooh" src="./assets/audio/doooh.wav"></audio>
+  <audio data-name="teehee" src="./assets/audio/teehee.wav"></audio>
+  <script src="./assets/javascript/script.js"></script>
 
-	</body>
+</body>
+
 </html>
