@@ -4,10 +4,11 @@
 
 ## Version 2 and improvements:
 
-The Plan
+**The Plan**
 This version and those after are to bring in good habits: Gulp (, Git branch, testing, DRY out.
 In addition, I want the player to choose the theme from a list as well as other ways to make the game more user friendly (keep track of wins, etc ...).
 Although I wish to add improvements, I am keeping this in vanilla JavaScript because I want to. Sorry, jQuery. You'll get your turn later.
+[Blog post on branches]('http://ihatetoast.io/2018/08/18/gitty-up-with-baby-steps/')
 
 To do:
 
