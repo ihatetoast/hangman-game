@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
   let letter;
 
   //HELPERS: OK TO BE GLOBAL
-  const regExLetters = /^[a-z]+$/i;
+  // const regExLetters = /^[a-z]+$/i;
 
   //SET UP CHALKBOARD:
   const alphabet = [
@@ -81,8 +81,8 @@ document.addEventListener('DOMContentLoaded', function(e) {
     'jodhpurs',
     'boxers',
     'capri',
-    'smarty',
-    'sassy'
+    'smarty pants',
+    'sassy pants'
   ];
 
   //messages arrays:
@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
   let misses = []; //will need to know how many bad guesses = a loss. 6
   let hits = [];
   let wins = 0;
+  let losses = 0;
   let wrongGuesses = 0;
   let userGuess;
   let randoWordArr;
@@ -135,23 +136,34 @@ document.addEventListener('DOMContentLoaded', function(e) {
     playGame();
     checkUserInput();
   };
+  //MAKE BLANKS AND DEAL WITH HYPHENS, SPACES, AND 'S
+  function makeBlanks(str) {
+    const strArr = str.split('');
+    wordArrDashes = strArr.map(char => {
+      if (/^[a-z]+$/i.test(char) === false) {
+        return char;
+      } else {
+        return '_';
+      }
+    });
 
+    dashesHTML.textContent = wordArrDashes.join(' ');
+  }
   function playGame() {
-    let wins = 0;
+    // let wins = 0;
     wordBank = pants; // need a list of words
     const randoWord = getRando(wordBank);
-    console.log(randoWord);
     randoWordArr = randoWord.split('');
-    wordArrDashes = randoWordArr.map(ltr => ' _ ');
-    dashesHTML.textContent = wordArrDashes.join(' ');
+
+    makeBlanks(randoWord);
     messages.textContent = 'Type a letter.';
     //themes.forEach(theme => theme.addEventListener('click', getTheme));
   } //END OF PLAY GAME FCN
 
   function checkUserInput() {
     document.onkeyup = function(e) {
+      const regExLetters = /^[a-z]+$/i;
       userGuess = e.key.toLowerCase();
-      // console.log(`userguess is ${userGuess}`);
       //validate: is choice a ltr?
       if (regExLetters.test(userGuess) === false) {
         messages.textContent = 'That is not a letter. Please choose a letter.';
@@ -180,7 +192,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
   // THIS FUNCTION HANDLES CORRECT GUESSES
   function handleHits(guess) {
-    //target the audio html5 elem by data name
     const audio = document.querySelector(`audio[data-name="teehee"]`);
     audio.play();
     hits.push(guess);
