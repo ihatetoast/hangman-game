@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
   //keep trak of wins
 
   function checkWin() {
-    if (wordArrDashes.indexOf(' _ ') === -1) {
+    if (wordArrDashes.indexOf('_') === -1) {
       messages.textContent = `You won, hun bun. (${wins} times)`;
       wins++;
       setTimeout(() => {
