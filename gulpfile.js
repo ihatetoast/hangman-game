@@ -1,3 +1,6 @@
+// ungulping until sec issues fixed 
+// gulp-cssnano not sup. needs cssnano and a reconfig. later tater
+
 var gulp = require('gulp');
 var cssnano = require('gulp-cssnano');
 var sass = require('gulp-sass');

@@ -5,9 +5,10 @@
 ## Version 2 and improvements:
 
 **The Plan**
-This version and those after are to bring in good habits: Gulp (, Git branch, testing, DRY out.
+Version 2 started out with good Gulp intentions; however, since then, gulp-cssnano is deprecated and has issues. Will regulp for practice but later. 
+I also return to this to play with testing.
 In addition, I want the player to choose the theme from a list as well as other ways to make the game more user friendly (keep track of wins, etc ...).
-Although I wish to add improvements, I am keeping this in vanilla JavaScript because I want to. Sorry, jQuery. You'll get your turn later.
+
 [Blog post on branches]('http://ihatetoast.io/2018/08/18/gitty-up-with-baby-steps/')
 
 To do:
@@ -39,3 +40,6 @@ Someone suggested that I keep track of the guesses remaining, but there's a stic
 **Version 1: Theme is Pants!**
 
 The classic hangman game where the player chooses letters to guess a word. Good guesses leave the chalkboard and appear in the dashes below. Bad guesses are noted in red, and a body part appears outside on the gallows.
+
+
+Why does it take too long to finish version 2? Because there's so much other stuff to learn. So. There you have it. 
